@@ -35,7 +35,26 @@
   });
 
   cw2.addEventListener("click", function () {
-    //TODO
+    answer.innerHTML = "Loading...";
+
+    setTimeout(() => {
+      fetch("https://jsonplaceholder.typicode.com/posts", {
+        method: "GET",
+      })
+        .then((response) => response.json())
+        .then((array) => {
+          let html = "<ul>";
+          array.forEach((post) => {
+            html += `<li><strong>${post.title}</strong><p>${post.body}</p></li>`;
+          });
+          html += "</ul>";
+          answer.innerHTML = html;
+        })
+        .catch((error) => {
+          console.error("Błąd:", error);
+          answer.innerHTML = "Wystąpił błąd podczas pobierania danych.";
+        });
+    }, 1000);
   });
 
   cw3.addEventListener("click", function () {
