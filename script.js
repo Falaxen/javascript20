@@ -3,6 +3,7 @@
   const cw1 = document.getElementById("cw1");
   const cw2 = document.getElementById("cw2");
   const cw3 = document.getElementById("cw3");
+  const cw4 = document.getElementById("cw4");
   const answer = document.getElementById("answer");
 
   example.addEventListener("click", function () {
@@ -96,6 +97,33 @@
             console.error("Błąd:", error);
             postResult.innerHTML = "Wystąpił błąd podczas pobierania posta.";
           });
+      });
+  });
+
+  cw4.addEventListener("click", function () {
+    answer.innerHTML = "Processing...";
+
+    const newPost = {
+      title: "Tytuł nowego posta",
+      body: "To jest treść nowo tworzonego posta wysłanego metodą POST.",
+      userId: 1,
+    };
+
+    fetch("https://jsonplaceholder.typicode.com/posts", {
+      method: "POST",
+      body: JSON.stringify(newPost),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        answer.innerHTML = `Dodano nowy post o ID = ${data.id}`;
+      })
+      .catch((error) => {
+        console.error("Błąd:", error);
+        answer.innerHTML = "Wystąpił błąd podczas dodawania posta.";
       });
   });
 })();
